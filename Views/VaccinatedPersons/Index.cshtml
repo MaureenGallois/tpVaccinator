@@ -1,0 +1,47 @@
+@model IEnumerable<VaccinatorNet.Models.Injection>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InjectionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lot)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReminderDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InjectionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lot)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReminderDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VaccinationId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.VaccinationId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.VaccinationId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
