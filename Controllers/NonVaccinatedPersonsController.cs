@@ -11,7 +11,7 @@ namespace VaccinatorNet.Controllers
 {
     public class NonVaccinatedPersonsController : Controller
     {
-        private readonly ContextBDD _context = new ContextBDD();
+        private readonly ContextBDD _context;
 
         public NonVaccinatedPersonsController(ContextBDD context)
         {
@@ -32,10 +32,10 @@ namespace VaccinatorNet.Controllers
             {
                 // QUERY FOR NON VACCINATED PEOPLE TO A DISEASE
                 query = from c in _context.Persons where !(from o in _context.Injections where (
-                                 from t in _context.VaccineTypes where t.Name.Contains(Disease)
+                                from t in _context.VaccineTypes where t.Name.Contains(Disease)
                                     select t.Name).Contains(o.Vaccine.VaccineType)
-                                    select o.Person.PersonId).Contains(c.PersonId)
-                                    select c;
+                                        select o.Person.PersonId).Contains(c.PersonId)
+                                            select c;
             }
             else
             {
@@ -50,6 +50,5 @@ namespace VaccinatorNet.Controllers
 
             return View(await query.ToListAsync());
         }
-
     }
 }

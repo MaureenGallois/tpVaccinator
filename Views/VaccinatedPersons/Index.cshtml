@@ -1,17 +1,34 @@
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
 @model IEnumerable<VaccinatorNet.Models.Injection>
 
-@{
-    ViewData["Title"] = "Index";
-}
+@{ ViewData["Title"] = "Index"; }
 
-<h1>Index</h1>
+<h1>Select vaccinations per person</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h4>Select a person to show his vaccinations</h4>
+<hr />
+<form asp-controller="VaccinatedPersons" asp-action="Index">
+    <p>
+        <select name="Id" class="form-control" asp-items="ViewBag.ListPersons"></select>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Person.Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Person.Firstname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vaccine.Brand)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.InjectionDate)
             </th>
@@ -25,23 +42,41 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.InjectionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lot)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReminderDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.VaccinationId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.VaccinationId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.VaccinationId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Person.Lastname)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Person.Firstname)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Vaccine.Brand)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.InjectionDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Lot)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ReminderDate)
+    </td>
+    @*<td>
+            <a asp-action="Edit" asp-route-id="@item.VaccinationId">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.VaccinationId">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.VaccinationId">Delete</a>
+        </td>*@
+</tr>}
     </tbody>
 </table>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

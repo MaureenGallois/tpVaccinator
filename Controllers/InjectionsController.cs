@@ -46,6 +46,8 @@ namespace VaccinatorNet.Controllers
         // GET: Injections/Create
         public IActionResult Create()
         {
+            ViewBag.ListPersons = _context.Persons.Select(x => new SelectListItem { Text = x.Lastname + " " + x.Firstname + " (" + x.PersonId + ")", Value = x.PersonId.ToString() }).ToList();
+            ViewBag.ListVaccines = _context.Vaccines.Select(x => new SelectListItem { Text = x.Brand + " (" + x.VaccineType + ")", Value = x.VaccineId.ToString() }).ToList();
             return View();
         }
 
